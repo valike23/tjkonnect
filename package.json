@@ -1,0 +1,35 @@
+{
+  "name": "tjconnect",
+  "version": "0.0.0",
+  "private": true,
+  "engines": {
+    "node": "10.x"
+  },
+  "scripts": {
+    "start": "node app"
+  },
+  "description": "tjconnect",
+  "author": {
+    "name": ""
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cloudinary": "^1.14.0",
+    "connect-multiparty": "^2.2.0",
+    "cookie-parser": "^1.4.4",
+    "country-state-city": "^1.0.0",
+    "crypto-random-string": "^3.0.1",
+    "debug": "^2.6.9",
+    "express": "^4.17.0",
+    "helmet": "^3.18.0",
+    "mongodb": "^3.3.0-beta2",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.2",
+    "mysql": "^2.17.1",
+    "paystack": "^2.0.1",
+    "pug": "^2.0.3",
+    "request": "^2.88.0",
+    "serve-favicon": "^2.5.0"
+  }
+}
