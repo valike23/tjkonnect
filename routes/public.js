@@ -185,7 +185,7 @@ router.post('/login', function (req, res) {
     })
 });
 router.get('/plans', function (req, res) {
-    let sql = 'SELECT * FROM `budget` ';
+    let sql = 'SELECT id, amount, impression,select 1 as category FROM `budget` ';
     connection.query(sql, function (err, results) {
         if (err) {
             res.status(503);
