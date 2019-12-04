@@ -5,13 +5,13 @@
         this.notification = notification;
 
     },
-    promoted: function (content, promoter, promotee, paymentId, duration, cost, promotedDate) {
+    promoted: function (content, promoter, promotee, paymentId, duration, cost, promotedDate,budget) {
         this.contentId = content;
         this.promoter = promoter;
         this.promotee = promotee;
         this.duration = duration;
         this.cost = cost;
-      
+        this.budget = budget;
         this.payment = paymentId;
        
         

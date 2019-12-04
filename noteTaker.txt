@@ -1,0 +1,2 @@
+﻿1. 12/3/2019: the post promotion end point at the user.js file : I am yet to handle what happens if payment is not successfully 
+registered by the payment.storePayment endpoint, this is a very critical issue to be handled before production.

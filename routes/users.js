@@ -9,6 +9,7 @@ const connection = mysql.createConnection(config.dbfree);
 cloudinary.config(config.cloudinary);
 var auth = require("../routes/session");
 const mongo = require("./mongo");
+const payment = require("./functions/payments");
 var multer = require('multer');
 const notification = require("./notification");
 var multipart = require('connect-multiparty');
@@ -66,7 +67,9 @@ router.use(function (req, res, next) {
 router.get('/', function (req, res) {
     mongo.comment.getComments(10, res);
 });
-
+router.post('/save_payment_info', function (req, res) {
+    let sql =''
+})
 router.get("/competitions/:status", function (req, res) {
     if (req.isAdmin == false) {
         res.status(401);
@@ -556,8 +559,10 @@ router.get('/togglenotification/:sub', function (req, res) {
 // This request is called when a user request a promotion.
 router.post('/promotion', function (req, res) {
     let id = req.authen.user.id;
-    var promotion = new models.promoted(req.body.content, id, null, req.body.request,
-        req.body.duration, req.body.cost, null);
+    let info = req.body;
+   let response = payment.storePayment(info.ref, id, info.category,info.cost);
+    var promotion = new models.promoted(req.body.content, id, null, req.body.ref,
+      Math.floor(req.body.cost/req.body.budget), req.body.cost,null,req.body.budget);
     //var sql = "CALL requestPromotion(" + promotion.content_id + "," + promotion.promoter_id + "," + promotion.duration + "," + promotion.payment + "," + promotion.cost + ")";
     let sql = "INSERT INTO promotions SET ?"
     connection.query(sql,promotion, function (err, results) {
