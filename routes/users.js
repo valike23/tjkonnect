@@ -654,7 +654,9 @@ router.get('/upgrade', function (req, res) {
     }
         )
 })
+router.post('/change_user', function (req, res) {
 
+})
 router.post('/createCompetition', multipartMiddleware, function (req, res) {
     let authen = req.authen;
     var thumbFile = req.files.file.path;
