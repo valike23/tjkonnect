@@ -398,6 +398,7 @@ router.get("/competition", function (req, res) {
                 err: err.message,
                 message: "An error occured in the DB"
             });
+            res.json(results);
             res.end();
             return;
         }
