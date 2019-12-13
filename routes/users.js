@@ -188,8 +188,9 @@ router.get('/getsubcontent/:page', function (req, res, next) {
 })
 router.post("/uploadpicsMob", function (req, res) {
     var authen = req.authen;
-    let sql = 'update users set profilePics = ? where id = ?';
-    connection.query(sql, [res.body.image, authen.user.id], function (err, results) {
+    let image = req.body.image;
+    let sql = "update users set profilePics ='" + image + "'  where id = " + authen.user.id;
+    connection.query(sql, function (err, results) {
         if (err) {
             res.status(503);
             res.json(err);
