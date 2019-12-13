@@ -67,6 +67,32 @@ router.use(function (req, res, next) {
 router.get('/', function (req, res) {
     mongo.comment.getComments(10, res);
 });
+router.put("/update", function (req, res) {
+
+    var edit = req.body;
+    var authen = req.authen;
+    console.log(edit);
+
+    let query = "update user set `" + edit.holder + "`= '" + edit.value + "' where id =" + authen.user.id;
+    connection.query(query, function (err, results) {
+        if (err) {
+            res.status(501);
+            res.json("error updating try again later");
+            res.end();
+        }
+        for (var key in authen.user) {
+            if (key == edit.holder) {
+                authen[key] = edit.value;
+                console.log(authen);
+                console.log(auth.update(authen));
+                break;
+            }
+        }
+        res.json("update successful");
+        res.end();
+    })
+})
+
 router.post('/save_payment_info', function (req, res) {
     let sql =''
 })

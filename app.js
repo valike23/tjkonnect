@@ -48,31 +48,6 @@ app.post('/form', function (req, res) {
     res.json(req.body);
     res.end()
 });
-router.put("/update", function (req, res) {
-   
-    var edit = req.body;
-    var authen = req.authen;
-    console.log(edit);
-
-    let query = "update user set `" + edit.holder + "`= '" + edit.value + "' where id =" + authen.user.id;
-    connection.query(query, function (err, results) {
-        if (err) {
-            res.status(501);
-            res.json("error updating try again later");
-            res.end();
-        }
-        for (var key in authen.user) {
-            if (key == edit.holder) {
-                authen[key] = edit.value;
-                console.log(authen);
-                console.log(auth.update(authen));
-                break;
-            }
-        }
-        res.json("update successful");
-        res.end();
-    })
-})
 
 
 // catch 404 and forward to error handler
