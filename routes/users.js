@@ -186,6 +186,22 @@ router.get('/getsubcontent/:page', function (req, res, next) {
 
     })
 })
+router.post("/uploadpics", function (req, res) {
+    var authen = req.authen;
+    let sql = 'update users set profilePics = ? where id = ?';
+    connection.query(sql, [res.body.image, authen.user.id], function (err, results) {
+        if (err) {
+            res.status(503);
+            res.json(err);
+            res.end();
+            return;
+        }
+        console.log(results);
+        res.json(results);
+        res.end();
+
+    })
+})
 router.post("/uploadpics", multipartMiddleware, function (req, res) {
     var thumbFile = req.files.file.path;
     var authen = req.authen;
