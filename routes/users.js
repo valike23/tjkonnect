@@ -186,7 +186,7 @@ router.get('/getsubcontent/:page', function (req, res, next) {
 
     })
 })
-router.post("/uploadpics", function (req, res) {
+router.post("/uploadpicsMob", function (req, res) {
     var authen = req.authen;
     let sql = 'update users set profilePics = ? where id = ?';
     connection.query(sql, [res.body.image, authen.user.id], function (err, results) {
