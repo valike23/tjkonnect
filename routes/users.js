@@ -97,7 +97,10 @@ router.put("/update", function (req, res) {
                 break;
             }
         }
-        res.json("update successful");
+        res.json({
+            msg: "update successful",
+            user: authen
+        });
         res.end();
     })
 })
