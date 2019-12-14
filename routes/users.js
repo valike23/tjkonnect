@@ -69,7 +69,11 @@ router.get('/', function (req, res) {
 });
 router.put("/update", function (req, res) {
 
-    var edit = req.body;
+   
+    let temp = Object.keys(req.body)[0];
+    let edit = {
+        temp: req.body[temp];
+    }
     var authen = req.authen;
     console.log(edit);
 
