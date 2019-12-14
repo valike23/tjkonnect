@@ -83,7 +83,8 @@ router.put("/update", function (req, res) {
             res.status(501);
             res.json({
                 err: "error updating try again later",
-                track: err
+                track: err,
+                data: edit
             });
             res.end();
             return;
