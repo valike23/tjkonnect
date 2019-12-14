@@ -71,9 +71,9 @@ router.put("/update", function (req, res) {
 
    
     let temp = Object.keys(req.body)[0];
-    let edit = {
-        temp: req.body[temp]
-    }
+    let edit = {};
+    edit.holder = temp;
+    edit.value = req.body[temp]
     var authen = req.authen;
     console.log(edit);
 
