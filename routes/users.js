@@ -77,12 +77,16 @@ router.put("/update", function (req, res) {
     var authen = req.authen;
     console.log(edit);
 
-    let query = "update user set `" + edit.holder + "`= '" + edit.value + "' where id =" + authen.user.id;
+    let query = "update users set `" + edit.holder + "`= '" + edit.value + "' where id =" + authen.user.id;
     connection.query(query, function (err, results) {
         if (err) {
             res.status(501);
-            res.json("error updating try again later");
+            res.json({
+                err: "error updating try again later",
+                track: err
+            });
             res.end();
+            return;
         }
         for (var key in authen.user) {
             if (key == edit.holder) {
