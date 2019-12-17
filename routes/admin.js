@@ -53,7 +53,7 @@ router.get('/all_prices', function (req, res) {
                 message: 'something went wrong when connecting to the db'
             });
         }
-        res.json(result);
+        res.json(results);
         res.end();
     })
 })
