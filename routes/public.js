@@ -125,7 +125,10 @@ router.post('/login', function (req, res) {
         if (err) {
             console.log(err);
             res.status(500);
-            res.json("something went wrong!!!");
+            res.json({
+                user: "something went wrong!!!",
+                trace: err
+            });
             res.end();
             return;
         }

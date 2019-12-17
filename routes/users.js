@@ -198,23 +198,28 @@ router.get('/getsubcontent/:page', function (req, res, next) {
 
     })
 })
-//router.post("/uploadpicsMobile", function (req, res) {
-//    var authen = req.authen;
-//    let image = req.body.image;
-//    let sql = "update users set profilePics ='" + image + "'  where id = " + authen.user.id;
-//    connection.query(sql, function (err, results) {
-//        if (err) {
-//            res.status(503);
-//            res.json(err);
-//            res.end();
-//            return;
-//        }
-//        console.log(results);
-//        res.json(results);
-//        res.end();
+router.post("/uploadpicsMobile", function (req, res) {
+    var authen = req.authen;
+    let image = req.body.image;
+    let sql = "update users set profilePics ='" + image + "'  where id = " + authen.user.id;
+    connection.query(sql, function (err, results) {
+        if (err) {
+            res.status(503);
+            res.json(err);
+            res.end();
+            return;
+        }
+        console.log(results);
+        authen.profilePics = image;
+        console.log(auth.update(authen));
+        res.json({
+            msg: "update successful",
+            user: authen
+        });
+        res.end();
 
-//    })
-//})
+    })
+})
 router.post("/uploadpics", multipartMiddleware, function (req, res) {
     var thumbFile = req.files.file.path;
     var authen = req.authen;
