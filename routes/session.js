@@ -48,7 +48,7 @@ let auth = {
     update: function (user) {
         for (var i = 0; i < this.sessions.length; i++) {
             if (user.user.id == this.sessions[i].user.id) {
-                this.sessions[i].duration = parseInt(Date.now()) + 6000 * duration;
+                this.sessions[i].duration = parseInt(Date.now()) + 6000000 * duration;
                 console.log(this.sessions);
                 return true;
                 break;
