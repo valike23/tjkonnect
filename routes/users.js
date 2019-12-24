@@ -230,7 +230,7 @@ router.post("/uploadpics", multipartMiddleware, function (req, res) {
             function (error, thumbnail) {
                 console.log(thumbnail);
                // let sql = "update [users] set profilePics =" + thumbnail.secure_url + ", publicId='" + thumbnail.public_id + "' where id = " + authen.user.id;
-                let sql = 'UPDATE `persons` SET `profilePics`=?,`publicId`=? WHERE ?'
+                let sql = 'UPDATE `persons` SET `profilePics`=?,`publicId`=? WHERE id = ?'
               //  let sql = `update users set profilePics = ${thumbnail.secure_url}, publicId = ${thumbnail.public_id} where id = ${authen.user.id}`;
                // let sql = "update users set profilePics ='" + thumbnail.secure_url + '", publicId="' + thumbnail.public_id + '" where id =' + authen.user.id;
                 connection.query(sql,[thumbnail.secure_url, thumbnail.public_id,authen.user.id], function (err, results) {
@@ -254,7 +254,7 @@ router.post("/uploadpics", multipartMiddleware, function (req, res) {
                     console.log(thumbnail);
 
 
-                    let sql = 'update set profilePics ="' + thumbnail.secure_url + '", publicId="' + thumbnail.public_id + '" where id =' + authen.user.id;
+                    let sql = 'update users set profilePics ="' + thumbnail.secure_url + '", publicId="' + thumbnail.public_id + '" where id =' + authen.user.id;
                     connection.query(sql, function (err, results) {
                         if (err) {
                             res.status(503);
