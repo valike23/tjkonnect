@@ -229,7 +229,7 @@ router.post("/uploadpics", multipartMiddleware, function (req, res) {
         cloudinary.uploader.upload(thumbFile,
             function (error, thumbnail) {
                 console.log(thumbnail);
-                let sql = "update users set profilePics ='" + thumbnail.secure_url + "', publicId='" + thumbnail.public_id+ "' where id = " + authen.user.id;
+                let sql = "update users set profilePics =" + thumbnail.secure_url + ", publicId='" + thumbnail.public_id + "' where id = " + authen.user.id;
 
               //  let sql = `update users set profilePics = ${thumbnail.secure_url}, publicId = ${thumbnail.public_id} where id = ${authen.user.id}`;
                // let sql = "update users set profilePics ='" + thumbnail.secure_url + '", publicId="' + thumbnail.public_id + '" where id =' + authen.user.id;
