@@ -623,9 +623,10 @@ router.get('/togglenotification/:sub', function (req, res) {
 router.post('/promotion', function (req, res) {
     let id = req.authen.user.id;
     let info = req.body;
-   let response = payment.storePayment(info.ref, id, info.category,info.cost);
+    let response = payment.storePayment(info.ref, id, info.category, info.cost);
+    let duration = Math.floor(req.body.cost / req.body.budget);
     var promotion = new models.promoted(req.body.content, id, null, req.body.ref,
-      Math.floor(req.body.cost/req.body.budget), req.body.cost,null,req.body.budget);
+     duration, req.body.cost,null,req.body.budget);
     //var sql = "CALL requestPromotion(" + promotion.content_id + "," + promotion.promoter_id + "," + promotion.duration + "," + promotion.payment + "," + promotion.cost + ")";
     let sql = "INSERT INTO promotions SET ?"
     connection.query(sql,promotion, function (err, results) {
@@ -648,7 +649,7 @@ router.put('/promotion', function (req, res) {
         res.end();
         return;
     }
-    let sql = 'update promotions set promotee =?, duration = ? , promotedDate = ? where id=?';
+    let sql = 'update promotions set promotee =?, duration , promotedDate = ? where id=?';
     let data = [authen.user.id, req.body.duration, new Date(),req.body.id]
     connection.query(sql,data, function (err, results) {
         if (err) {
@@ -664,7 +665,7 @@ router.put('/promotion', function (req, res) {
 // retrieve promotions ... all promoted contents and all unconfirmed promotions
 router.get('/promotion/:access', function (req, res) {
     var access = JSON.parse(req.params.access);
-    var sql = (access) ?  "select * from promotions": "select * from promotions where promotee = null";
+    var sql = (access) ?  "select * from promotions": "select * from promotions where promotee is null";
     connection.query(sql, function (err, results) {
         if (err) {
             res.status(503);
