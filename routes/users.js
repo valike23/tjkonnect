@@ -706,7 +706,8 @@ router.delete("/comment/:id", function (req, res) {
 router.post('/upgrade', function (req, res) {
     let info = req.body;
     let id = req.authen.user.id;
-    info.id = id;
+    
+    info.userId = id;
     let response = payment.storePayment(info.ref, id, 5, info.cost);
     let sql = "INSERT INTO application_form SET ?"
     connection.query(sql, info, function (err, results) {
