@@ -96,7 +96,24 @@ router.post('/change_price', function (req, res) {
     })
 })
 
+router.post("/payment", function (req, res) {
+    let sql = "insert into payment_category set ?";
+    connection.query(sql, req.body, function (err, results) {
+        if (err) {
+            res.status(503);
+            res.json({
+                developer: err.message,
+                user: "Oops!!! An internal server error occured"
+            });
+            res.end();
+            return;
+        }
+        res.json(results);
+        res.end();
 
+    })
+
+})
 
 
 module.exports = router;

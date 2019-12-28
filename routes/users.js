@@ -68,7 +68,7 @@ router.get('/', function (req, res) {
     mongo.comment.getComments(10, res);
 });
 router.put("/update", function (req, res) {
-
+    //update profile info one by one
    
     let temp = Object.keys(req.body)[0];
     let edit = {};
@@ -109,6 +109,7 @@ router.post('/save_payment_info', function (req, res) {
     let sql =''
 })
 router.get("/competitions/:status", function (req, res) {
+    //retrieve all competitions for admin where the competiotion is active or not
     if (req.isAdmin == false) {
         res.status(401);
         res.end();
@@ -131,6 +132,7 @@ router.get("/competitions/:status", function (req, res) {
 
 });
 router.post("/validate_competition", function (req, res) {
+    //admin endpoint to validate a competition
     if (req.isAdmin == false) {
         res.status(401);
         res.end();
@@ -701,22 +703,24 @@ router.post("/reply", function (req, res) {
 router.delete("/comment/:id", function (req, res) {
 
 });
-router.get('/upgrade', function (req, res) {
-    let authen = req.authen;
-    let id = authen.user.id;
-    let sql = "UPDATE `users` SET `type`='organization' WHERE id = ?";
-    connection.query(sql, id, function (err, results) {
+router.post('/upgrade', function (req, res) {
+    let info = req.body;
+    let id = req.authen.user.id;
+    info.id = id;
+    let response = payment.storePayment(info.ref, id, 5, info.cost);
+    let sql = "INSERT INTO application_form SET ?"
+    connection.query(sql, info, function (err, results) {
         if (err) {
-            res.json(err);
+            res.status(503);
+            res.json(err.message);
             res.end();
             return;
         }
-        res.json({
-            'details': results,
-        'message': 'your account has been updated'});
+        res.json(results);
         res.end();
-    }
-        )
+    })
+
+  
 })
 router.post('/change_user', function (req, res) {
 
