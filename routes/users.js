@@ -67,7 +67,7 @@ router.use(function (req, res, next) {
 router.get('/', function (req, res) {
     mongo.comment.getComments(10, res);
 });
-router.put("/update", function (req, res) {
+router.post("/update", function (req, res) {
     //update profile info one by one
    
     let temp = Object.keys(req.body)[0];
@@ -706,9 +706,11 @@ router.delete("/comment/:id", function (req, res) {
 router.post('/upgrade', function (req, res) {
     let info = req.body;
     let id = req.authen.user.id;
-    
+
     info.userId = id;
     let response = payment.storePayment(info.ref, id, 5, info.cost);
+    delete info.ref;
+    delete info.cost;
     let sql = "INSERT INTO application_form SET ?"
     connection.query(sql, info, function (err, results) {
         if (err) {
@@ -721,7 +723,10 @@ router.post('/upgrade', function (req, res) {
         res.end();
     })
 
-  
+
+});
+router.post('/reapply', function (req, res) {
+
 })
 router.post('/change_user', function (req, res) {
 
