@@ -73,6 +73,12 @@ router.post("/update", function (req, res) {
     let temp = Object.keys(req.body)[0];
     let edit = {};
     edit.holder = temp;
+    if (edit.holder == 'type' || edit.holder == 'profilePics' || edit.holder == 'id'
+        || edit.holder == 'password' || edit.holder == 'publicId') {
+        res.json(`you cant update ${edit.holder}`)
+        res.end();
+
+    }
     edit.value = req.body[temp]
     var authen = req.authen;
     console.log(edit);
