@@ -15,12 +15,7 @@ const saltRounds = bcrypt.genSaltSync(10);
 var worker = require("./worker");
 const session = require("./session");
 router.get('/', function (req, res) {
-    let sql = `CREATE PROCEDURE getApplications(IN para TINYINT) NOT DETERMINISTIC READS SQL DATA SQL SECURITY DEFINER
- BEGIN
- SELECT application_form.id, application_form.company_name as company, application_form.email, application_form.address, application_form.RC as RCNumber, 
- application_form.phone, users.username as username FROM application_form
- INNER JOIN users on users.id = application_form.userId where application_form.status = para;
- END`;
+    let sql = `INSERT INTO payment_category(id, name, amount) VALUES (NULL, 'upgrade', '1000');`;
     connection.query(sql, function (err, resu) {
         if (err) {
             res.json(err);
@@ -70,8 +65,26 @@ router.get('/competitioncontents/:page/:tag', function (req, res, next) {
 router.get('/cities/:id', function (req, res) {
     let state = req.params.id;
     let cities = csc.getCitiesOfState(state);
+    
     res.json(cities);
     res.end();
+});
+router.post('/getareabyid', function (req, res) {
+    let temp = Object.keys(req.body)[0];
+    let edit = {};
+    let result;
+    edit.holder = temp;
+    edit.value = req.body[temp];
+    console.log(edit);
+    if (edit.holder == 'city') {
+        res.json(csc.getCityById(edit.value));
+        res.end();
+    } else {
+        res.json(csc.getStateById(toString(edit.value)));
+        res.end();
+    }
+
+  
 });
 router.post('/register', function (req, res) {
     var user = req.body;
@@ -103,8 +116,9 @@ router.post('/register', function (req, res) {
     })
 });
 router.get('/prices/:data', function (req, res) {
-    let query = 'select amount from payment_category where name =' + req.params.data;
-    connection.query(query, function (err, results) {
+    let query = 'select amount from payment_category where name = ?' ;
+    console.log(query);
+    connection.query(query, [req.params.data], function (err, results) {
         if (err) {
             res.status(503);
             console.log(err.message);
