@@ -132,10 +132,11 @@ router.get("/application/:status", function (req, res) {
 
     })
 });
-router.post("/application", function (req, res) {
+router.post("/approve_application", function (req, res) {
     //approve, deny or block upgrade application
-    let sql = "";
-    connection.query(sql, req.body, function (err, results) {
+    let data = req.body;
+    let sql = "update application_form set status = ?, reason = ? where id =?";
+    connection.query(sql, [data.status, data.reason, data.id], function (err, results) {
         if (err) {
             res.status(503);
             res.json({
