@@ -115,5 +115,41 @@ router.post("/payment", function (req, res) {
 
 })
 
+router.get("/application/:status", function (req, res) {
+    let sql = "call getApplications(?)";
+    connection.query(sql, req.body, function (err, results) {
+        if (err) {
+            res.status(503);
+            res.json({
+                developer: err.message,
+                user: "Oops!!! An DB related error occured"
+            });
+            res.end();
+            return;
+        }
+        res.json(results);
+        res.end();
+
+    })
+});
+router.post("/application", function (req, res) {
+    //approve, deny or block upgrade application
+    let sql = "";
+    connection.query(sql, req.body, function (err, results) {
+        if (err) {
+            res.status(503);
+            res.json({
+                developer: err.message,
+                user: "Oops!!! An DB related error occured"
+            });
+            res.end();
+            return;
+        }
+        res.json(results);
+        res.end();
+
+    })
+})
+
 
 module.exports = router;

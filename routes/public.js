@@ -1,4 +1,4 @@
-﻿'use strict';
+﻿//'use strict';
 var express = require('express');
 var router = express.Router();
 var mysql = require("mysql");
@@ -15,8 +15,22 @@ const saltRounds = bcrypt.genSaltSync(10);
 var worker = require("./worker");
 const session = require("./session");
 router.get('/', function (req, res) {
-
-    res.json(session.sessions);
+    let sql = `CREATE PROCEDURE getApplications(IN para TINYINT) NOT DETERMINISTIC READS SQL DATA SQL SECURITY DEFINER
+ BEGIN
+ SELECT application_form.id, application_form.company_name as company, application_form.email, application_form.address, application_form.RC as RCNumber, 
+ application_form.phone, users.username as username FROM application_form
+ INNER JOIN users on users.id = application_form.userId where application_form.status = para;
+ END`;
+    connection.query(sql, function (err, resu) {
+        if (err) {
+            res.json(err);
+            res.end();
+            return;
+        }
+        res.json(resu);
+        res.end();
+    })
+  //  res.json(session.sessions);
    
 })
 router.get('/countries', function (req, res) {

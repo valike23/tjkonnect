@@ -11,6 +11,9 @@
         password: 'ludboyar',
         database: 'ego_bank'
     },
+    remote: {
+
+    },
     cloudinary: {
         cloud_name: 'tjconnect',
         api_key: '556459332373436',

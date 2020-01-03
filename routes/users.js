@@ -10,6 +10,7 @@ cloudinary.config(config.cloudinary);
 var auth = require("../routes/session");
 const mongo = require("./mongo");
 const payment = require("./functions/payments");
+const validate = require("./functions/validations");
 var multer = require('multer');
 const notification = require("./notification");
 var multipart = require('connect-multiparty');
@@ -77,6 +78,8 @@ router.post("/update", function (req, res) {
         || edit.holder == 'password' || edit.holder == 'publicId') {
         res.json(`you cant update ${edit.holder}`)
         res.end();
+        return;
+        break;
 
     }
     edit.value = req.body[temp]
@@ -686,7 +689,7 @@ router.get('/promotion/:access', function (req, res) {
     })
 
 });
-//comment API2 (private)
+//comment API2 (private).
 router.post("/comments", function (req, res) {
     let myComment = req.body;
     let user = req.authen.user;
@@ -717,7 +720,7 @@ router.post('/upgrade', function (req, res) {
     let response = payment.storePayment(info.ref, id, 5, info.cost);
     delete info.ref;
     delete info.cost;
-    let sql = "INSERT INTO application_form SET ?"
+    let sql = "INSERT INTO application_form SET ?";
     connection.query(sql, info, function (err, results) {
         if (err) {
             res.status(503);
@@ -732,7 +735,20 @@ router.post('/upgrade', function (req, res) {
 
 });
 router.post('/reapply', function (req, res) {
-
+    let id = req.authen.user.id;
+    console.log(id);
+    let promise = new Promise(function (resolve, reject) {
+        validate.validateUpgrade(id, resolve, reject);
+    })
+    promise.then(function (resu) {
+        res.json(resu);
+        res.end();
+    }, function (err) {
+        res.json(err);
+        res.end();
+    })
+   
+ 
 })
 router.post('/change_user', function (req, res) {
 
