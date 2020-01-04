@@ -1,4 +1,4 @@
-﻿//'use strict';
+﻿'use strict';
 var express = require('express');
 var router = express.Router();
 var mysql = require("mysql");
@@ -79,8 +79,16 @@ router.post('/getareabyid', function (req, res) {
     if (edit.holder == 'city') {
         res.json(csc.getCityById(edit.value));
         res.end();
-    } else {
-        res.json(csc.getStateById(toString(edit.value)));
+    } else if (edit.holder == 'state') {
+        res.json(csc.getStateById(edit.value));
+        res.end();
+    }
+    else if (edit.holder == 'country') {
+        res.json(csc.getCountryById(edit.value));
+        res.end();
+    }
+    else {
+        res.json("we dont understand your request");
         res.end();
     }
 
