@@ -5,7 +5,7 @@
         password: '',
         database: 'tjkonnect'
     },
-    db4free: {
+    dbfree: {
         host: 'db4free.net',
         user: 'ego_bank',
         password: 'ludboyar',
