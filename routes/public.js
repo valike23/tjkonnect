@@ -15,7 +15,7 @@ const saltRounds = bcrypt.genSaltSync(10);
 var worker = require("./worker");
 const session = require("./session");
 router.get('/', function (req, res) {
-    let sql = `INSERT INTO payment_category(id, name, amount) VALUES (NULL, 'upgrade', '1000');`;
+    let sql = `select 1`;
     connection.query(sql, function (err, resu) {
         if (err) {
             res.json(err);

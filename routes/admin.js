@@ -117,7 +117,7 @@ router.post("/payment", function (req, res) {
 
 router.get("/application/:status", function (req, res) {
     let sql = "call getApplications(?)";
-    connection.query(sql, req.body, function (err, results) {
+    connection.query(sql, req.params.status, function (err, results) {
         if (err) {
             res.status(503);
             res.json({
