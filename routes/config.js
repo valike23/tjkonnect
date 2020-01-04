@@ -3,16 +3,20 @@
         host: '127.0.0.1',
         user: 'root',
         password: '',
-        database: 'tjconnect'
+        database: 'tjkonnect'
     },
-    dbfree: {
+    db4free: {
         host: 'db4free.net',
         user: 'ego_bank',
         password: 'ludboyar',
         database: 'ego_bank'
     },
-    remote: {
-
+    test: {
+        host: '40.67.150.6',
+        user: 'external',
+        password: ' 2uaUexU56tW7Nd2E',
+        database: 'test'
+       
     },
     cloudinary: {
         cloud_name: 'tjconnect',
