@@ -239,6 +239,14 @@ router.post("/uploadpics", multipartMiddleware, function (req, res) {
     if (authen.user.publicId == null) {
         cloudinary.uploader.upload(thumbFile,
             function (error, thumbnail) {
+                if (error) {
+                    res.json({
+                        err: JSON.stringify(error),
+                        message: "cloudinary error"
+                    });
+                    res.end();
+                    return;
+                }
                 console.log(thumbnail);
                // let sql = "update [users] set profilePics =" + thumbnail.secure_url + ", publicId='" + thumbnail.public_id + "' where id = " + authen.user.id;
                 let sql = 'UPDATE `persons` SET `profilePics`=?,`publicId`=? WHERE id = ?'
