@@ -660,7 +660,7 @@ router.post('/promotion', function (req, res) {
     })
 })
 //*** for admin to accept a promotion
-router.put('/promotion', function (req, res) {
+router.post('/promotion_1', function (req, res) {
     let authen = req.authen;
     if (authen.user.type != 'admin') {
         res.status(401);
