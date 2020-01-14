@@ -79,7 +79,7 @@ router.post("/update", function (req, res) {
         res.json(`you cant update ${edit.holder}`)
         res.end();
         return;
-        break;
+     
 
     }
     edit.value = req.body[temp]
