@@ -41,7 +41,10 @@ app.use('/api/public', publicApi);
 app.use('/api/ticket', ticket);
 app.use('/api/admin', admin);
 app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/home.html'); 
+});
+app.get('/api', function (req, res) {
+    res.sendFile(__dirname + '/index.html'); 
 })
 app.post('/form', function (req, res) {
     console.log(req.body);
